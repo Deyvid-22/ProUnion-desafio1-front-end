@@ -9,6 +9,9 @@ import { MdOutlineSend, MdModeEdit} from "react-icons/md";
 
 import { format } from 'date-fns';
 
+import { toast } from "react-toastify";
+import { MessageError } from "@/components/MessageError";
+
 interface TaskProps {
   id: string;
   title: string;
@@ -39,7 +42,7 @@ export default function App() {
     event.preventDefault();
 
     if(!titleRef.current?.value) {
-       alert("Preencha o campo tarefa")
+       toast.error("Preencha o campo tarefa")
       return
     }
 
@@ -84,7 +87,7 @@ export default function App() {
   async function handleUpdate(id: string) { //atualiza o titulo da tarefa com base no id
    
     if(!titleRef.current?.value){
-        alert("Preencha o campo");
+        toast.error("Preencha o campo")
         return
     }
    
@@ -99,6 +102,7 @@ export default function App() {
 
       setTasks(updatedTasks);
       cancelEdit();
+      window.location.reload();
     } catch (error) {
       console.error("Erro ao atualizar tarefa:", error);
     }
@@ -182,6 +186,7 @@ export default function App() {
         </main>
 
       </div>
+      <MessageError/>
     </div>
   );
 }
